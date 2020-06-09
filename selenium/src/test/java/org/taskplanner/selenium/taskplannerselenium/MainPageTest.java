@@ -4,10 +4,13 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Date;
 
 public class MainPageTest {
     private WebDriver chromeDriver;
@@ -25,7 +28,6 @@ public class MainPageTest {
         WebElement element = chromeDriver.findElement(By.id("root"));
 
         Assert.assertNotNull(element);
-
         chromeDriver.close();
     }
 
@@ -33,17 +35,16 @@ public class MainPageTest {
     public void taskAdded() {
         chromeDriver.get(baseUrl + "newTask");
 
-        chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "Check1");
-        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("value", "Check2");
-        chromeDriver.findElement(By.id("StartTime")).sendKeys("value", "2020-06-08T$16:00");
-        chromeDriver.findElement(By.id("EndTime")).sendKeys("value", "2020-06-08T$17:00");
+        chromeDriver.findElement(By.id("TaskName")).sendKeys("Check1");
+        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
+        chromeDriver.findElement(By.id("StartTime")).sendKeys("2020-06-08T16:00");
+        chromeDriver.findElement(By.id("EndTime")).sendKeys("2020-06-08T17:00");
 
         chromeDriver.findElement(By.id("Save")).click();
 
         String currentUrl = chromeDriver.getCurrentUrl();
 
         Assert.assertEquals(baseUrl + "index", currentUrl);
-
         chromeDriver.close();
     }
 
@@ -52,18 +53,32 @@ public class MainPageTest {
         chromeDriver.get(baseUrl + "newTask");
 
         //chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "");
-        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("value", "Check2");
-        chromeDriver.findElement(By.id("StartTime")).sendKeys("value", "2020-06-08T$16:00");
-        chromeDriver.findElement(By.id("EndTime")).sendKeys("value", "2020-06-08T$17:00");
+        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
+        chromeDriver.findElement(By.id("StartTime")).sendKeys("2020-06-08T16:00");
+        chromeDriver.findElement(By.id("EndTime")).sendKeys("2020-06-08T17:00");
 
         chromeDriver.findElement(By.id("Save")).click();
 
-        WebElement alert = chromeDriver.findElement(By.id("nameInvalid"));
         String currentUrl = chromeDriver.getCurrentUrl();
 
-        Assert.assertNotNull(alert);
-        Assert.assertEquals("http://localhost:3000/newTask", currentUrl);
+        Assert.assertEquals(baseUrl + "newTask", currentUrl);
 
         chromeDriver.close();
+    }
+
+    @Test
+    public void taskNoInvalidDate() {
+        chromeDriver.get(baseUrl + "newTask");
+
+        chromeDriver.findElement(By.id("TaskName")).sendKeys("Check1");
+        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
+        chromeDriver.findElement(By.id("StartTime")).sendKeys("0806" + Keys.TAB + "2020" + Keys.TAB + "1600");
+        chromeDriver.findElement(By.id("EndTime")).sendKeys("0806" + Keys.TAB + "2020" + Keys.TAB + "1500");
+
+        chromeDriver.findElement(By.id("Save")).click();
+
+        String currentUrl = chromeDriver.getCurrentUrl();
+
+        Assert.assertEquals(baseUrl + "newTask", currentUrl);
     }
 }
