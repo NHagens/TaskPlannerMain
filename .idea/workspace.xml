@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="812d3ee1-4651-4bd7-b1d6-ee377ed99b7f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/selenium/selenium.iml" beforeDir="false" afterPath="$PROJECT_DIR$/selenium/selenium.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/selenium/src/test/java/org/taskplanner/selenium/taskplannerselenium/MainPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/selenium/src/test/java/org/taskplanner/selenium/taskplannerselenium/MainPageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/src/Components/TaskInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/Components/TaskInput.jsx" afterDir="false" />
     </list>
@@ -193,6 +191,7 @@
       <workItem from="1591611860512" duration="145000" />
       <workItem from="1591612180344" duration="7114000" />
       <workItem from="1591626446267" duration="2178000" />
+      <workItem from="1591692671459" duration="991000" />
     </task>
     <servers />
   </component>

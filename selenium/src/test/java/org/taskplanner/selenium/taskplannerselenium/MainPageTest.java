@@ -35,7 +35,6 @@ public class MainPageTest {
 
         chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "Check1");
         chromeDriver.findElement(By.id("TaskDescription")).sendKeys("value", "Check2");
-
         chromeDriver.findElement(By.id("StartTime")).sendKeys("value", "2020-06-08T$16:00");
         chromeDriver.findElement(By.id("EndTime")).sendKeys("value", "2020-06-08T$17:00");
 
@@ -44,6 +43,26 @@ public class MainPageTest {
         String currentUrl = chromeDriver.getCurrentUrl();
 
         Assert.assertEquals("http://localhost:3000/index", currentUrl);
+
+        chromeDriver.close();
+    }
+
+    @Test
+    public void taskNoEmptyName() {
+        chromeDriver.get(baseUrl + "newTask");
+
+        chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "");
+        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("value", "Check2");
+        chromeDriver.findElement(By.id("StartTime")).sendKeys("value", "2020-06-08T$16:00");
+        chromeDriver.findElement(By.id("EndTime")).sendKeys("value", "2020-06-08T$17:00");
+
+        chromeDriver.findElement(By.id("Save")).click();
+
+        WebElement alert = chromeDriver.findElement(By.id("invalidAlert"));
+        String currentUrl = chromeDriver.getCurrentUrl();
+
+        Assert.assertNotNull(alert);
+        Assert.assertEquals("http://localhost:3000/newTask", currentUrl);
 
         chromeDriver.close();
     }
