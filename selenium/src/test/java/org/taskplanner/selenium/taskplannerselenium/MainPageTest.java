@@ -25,5 +25,26 @@ public class MainPageTest {
 
         Assert.assertNotNull(element);
         Assert.assertEquals("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", element.getAttribute("src"));
+
+        chromeDriver.close();
+    }
+
+    @Test
+    public void taskAdded() {
+        chromeDriver.get(baseUrl + "newTask");
+
+        chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "Check1");
+        chromeDriver.findElement(By.id("TaskDescription")).sendKeys("value", "Check2");
+
+        chromeDriver.findElement(By.id("StartTime")).sendKeys("value", "2020-06-08T$16:00");
+        chromeDriver.findElement(By.id("EndTime")).sendKeys("value", "2020-06-08T$17:00");
+
+        chromeDriver.findElement(By.id("Save")).click();
+
+        String currentUrl = chromeDriver.getCurrentUrl();
+
+        Assert.assertEquals("http://localhost:3000/index", currentUrl);
+
+        chromeDriver.close();
     }
 }
