@@ -80,5 +80,7 @@ public class MainPageTest {
         String currentUrl = chromeDriver.getCurrentUrl();
 
         Assert.assertEquals(baseUrl + "newTask", currentUrl);
+
+        chromeDriver.close();
     }
 }

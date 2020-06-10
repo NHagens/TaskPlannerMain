@@ -1,31 +1,36 @@
 package com.taskplanner.logic;
 
 import lombok.Data;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @Entity
 public class Task {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer Id;
+    @GeneratedValue
+    private Integer id;
 
     private String name;
     private String description;
     private String startTime;
     private String endTime;
 
-    protected Task() {}
+    @ManyToMany
+    @JoinTable(
+            name = "TASK_TAG",
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+    private List<Tag> tags;
 
+    public Task() {}
     public Task(String name, String description, String startTime, String endTime) {
-        this.name = name;
-        this.description = description;
+        this.name=name;
+        this.description=description;
         this.startTime = startTime;
         this.endTime = endTime;
     }
