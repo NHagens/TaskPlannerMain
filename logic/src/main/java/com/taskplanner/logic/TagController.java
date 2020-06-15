@@ -20,7 +20,8 @@ public class TagController {
         List<Tag> baseTags = Arrays.asList(
                 new Tag("Business"),
                 new Tag("Hobby"),
-                new Tag("Appointment")
+                new Tag("Appointment"),
+                new Tag("Random")
         );
         repository.saveAll(baseTags);
     }
