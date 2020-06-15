@@ -3,6 +3,7 @@ package com.taskplanner.logic;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Response;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -41,5 +42,16 @@ public class TaskController {
         ArrayList<Task> output = new ArrayList<Task>();
         output.add(foundTasks.get(rand.nextInt(foundTasks.size())));
         return output;
+    }
+
+    @DeleteMapping("/removeTask")
+    public @ResponseBody Response deleteTask(@Valid @RequestBody Task task) {
+        try {
+            repository.delete(task);
+            return Response.status(Response.Status.OK).build();
+        }
+        catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
