@@ -21,6 +21,11 @@ public class MainPageTest {
         chromeDriver = new ChromeDriver();
     }
 
+    private void getUser(WebDriver driver) {
+        driver.get(baseUrl + "login");
+        driver.findElement(By.id("Test1")).click();
+    }
+
     @Test
     public void siteRunning() {
         chromeDriver.get(baseUrl);
@@ -28,12 +33,15 @@ public class MainPageTest {
         WebElement element = chromeDriver.findElement(By.id("root"));
 
         Assert.assertNotNull(element);
+
         chromeDriver.close();
     }
 
     @Test
     public void taskAdded() {
-        chromeDriver.get(baseUrl + "newTask");
+        getUser(chromeDriver);
+
+        chromeDriver.navigate().to(baseUrl+"newTask");
 
         chromeDriver.findElement(By.id("TaskName")).sendKeys("Check1");
         chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
@@ -45,12 +53,15 @@ public class MainPageTest {
         String currentUrl = chromeDriver.getCurrentUrl();
 
         Assert.assertEquals(baseUrl + "index", currentUrl);
+
         chromeDriver.close();
     }
 
     @Test
     public void taskNoEmptyName() {
-        chromeDriver.get(baseUrl + "newTask");
+        getUser(chromeDriver);
+
+        chromeDriver.navigate().to(baseUrl+"newTask");
 
         //chromeDriver.findElement(By.id("TaskName")).sendKeys("value", "");
         chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
@@ -68,7 +79,9 @@ public class MainPageTest {
 
     @Test
     public void taskNoInvalidDate() {
-        chromeDriver.get(baseUrl + "newTask");
+        getUser(chromeDriver);
+
+        chromeDriver.navigate().to(baseUrl+"newTask");
 
         chromeDriver.findElement(By.id("TaskName")).sendKeys("Check1");
         chromeDriver.findElement(By.id("TaskDescription")).sendKeys("Check2");
