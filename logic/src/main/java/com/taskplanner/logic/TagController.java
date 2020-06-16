@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/tag")
 public class TagController {
     ITagRepository repository;
+
     public TagController(ITagRepository repository) {
         this.repository = repository;
     }
@@ -26,7 +28,6 @@ public class TagController {
         repository.saveAll(baseTags);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getAll")
     public @ResponseBody Iterable<Tag> getAll() {
         return repository.findAll();

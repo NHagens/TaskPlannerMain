@@ -27,6 +27,9 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
     private List<Tag> tags;
 
+    @ManyToOne
+    private User postOwner;
+
     public Task() {}
     public Task(String name, String description, String startTime, String endTime) {
         this.name=name;

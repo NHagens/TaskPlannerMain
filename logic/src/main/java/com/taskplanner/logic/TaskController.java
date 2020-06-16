@@ -21,9 +21,10 @@ public class TaskController {
         return repository.save(task);
     }
 
-    @GetMapping(path = "/findAll")
-    public @ResponseBody Iterable<Task> findAllTasks() {
-        return repository.findAll();
+    @GetMapping(path = "/findAllFromUser")
+    public @ResponseBody Iterable<Task> findAllTasks(String username) {
+
+        return repository.findAllFromUser(username);
     }
 
     @GetMapping("/createRandom")
