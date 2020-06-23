@@ -15,13 +15,15 @@ public class User {
     @GeneratedValue
     private Integer id;
     private String name;
+    private String password;
 
     /*@OneToMany
     private List<Task> postedTasks;*/
 
     public User() {}
 
-    public User(String name) {
+    public User(String name, String password) {
         this.name = name;
+        this.password = password;
     }
 }

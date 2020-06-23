@@ -1,7 +1,16 @@
 package com.taskplanner.logic;
 
+import com.taskplanner.logic.security.JwtTokenRequest;
+import com.taskplanner.logic.security.JwtTokenResponse;
+import com.taskplanner.logic.security.JwtTokenUtil;
+import com.taskplanner.logic.security.JwtUserDetailsService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,9 +29,11 @@ public class UserController {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         List<User> baseUsers = Arrays.asList(
-                new User("Test1"),
-                new User("Test2")
+                new User("Test1", passwordEncoder.encode("Test1")),
+                new User("Test2", passwordEncoder.encode("Test2"))
         );
         repository.saveAll(baseUsers);
     }
@@ -35,5 +46,17 @@ public class UserController {
     @GetMapping("/getAll")
     public Iterable<User> getAllUsers() {
         return repository.findAll();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
+            throws AuthenticationException {
+        JwtUserDetailsService service = new JwtUserDetailsService(repository);
+        JwtTokenUtil util = new JwtTokenUtil();
+
+        final UserDetails userDetails = service.loadUserByUsername(authenticationRequest.getUsername());
+        final String token = util.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtTokenResponse(token));
     }
 }
